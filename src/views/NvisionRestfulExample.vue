@@ -52,7 +52,7 @@ export class NvisionRestfulExample extends Vue {
   public result = "";
 
   private objectDetectionService = nvision.objectDetection(
-    "cdb29f355cb4059995e05420db8a943d677490e93a0b2e0c7a88c58324f5e4f8f1c7c3cfd0439de77f4231c309475178ac"
+    "your API key goes here"
   );
 
   constructor() {

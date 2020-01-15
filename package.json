@@ -1,5 +1,6 @@
 {
-  "name": "nvision-browser-example",
+  "name": "nvision-js",
+  "license": "apache-2.0",
   "version": "0.1.0",
   "private": true,
   "scripts": {
