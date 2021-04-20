@@ -51,9 +51,9 @@ export class NvisionRestfulExample extends Vue {
   public file?: File[] | File = [];
   public result = "";
 
-  private objectDetectionService = nvision.objectDetection(
-    "your API key goes here"
-  );
+  private objectDetectionService = nvision.objectDetection({
+    apiKey:     "your API key goes here"
+  });
 
   constructor() {
     super();
@@ -62,13 +62,12 @@ export class NvisionRestfulExample extends Vue {
   public async request() {
     this.result = "";
     const reader = new FileReader();
-    reader.onload = event => {
+    reader.onload = (event) => {
       this.objectDetectionService
-        .predict(
-          (reader.result as string).replace(/data:image\/png;base64,/, ""),
-          false
-        )
-        .then(data => (this.result = JSON.stringify(data, null, 4)));
+        .predict({
+          rawData: (reader.result as string).replace(/data:.+;base64,/, ""),
+        })
+        .then((data) => (this.result = JSON.stringify(data, null, 4)));
     };
     reader.readAsDataURL(this.file as File);
   }

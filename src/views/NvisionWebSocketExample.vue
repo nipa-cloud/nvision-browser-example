@@ -40,9 +40,9 @@ export class NvisionWebSocketExample extends Vue {
   public width = 640;
 
   private objectDetectionService = nvision
-    .objectDetection(
-      "your API key goes here"
-    )
+    .objectDetection({
+      streamingKey:    "your streaming key goes here"
+    })
     .stream();
 
   constructor() {
@@ -59,11 +59,11 @@ export class NvisionWebSocketExample extends Vue {
 
     await navigator.mediaDevices
       .getUserMedia({ video: true, audio: false })
-      .then(stream => {
+      .then((stream) => {
         video.srcObject = stream;
         video.play();
       })
-      .catch(err => {
+      .catch((err) => {
         console.log("An error occurred: " + err);
       });
 
@@ -87,12 +87,14 @@ export class NvisionWebSocketExample extends Vue {
               blob.arrayBuffer().then((buffer: any) => {
                 const reader = new FileReader();
                 reader.onload = () => {
-                  this.objectDetectionService.predict(new Uint8Array(buffer));
+                  this.objectDetectionService.predict({
+                    rawData: new Uint8Array(buffer)
+                  });
                 };
                 reader.readAsDataURL(blob);
               });
             }, "image/jpeg");
-          }, 1000);
+          }, 20000);
         }
       },
       false
